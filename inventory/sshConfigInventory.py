@@ -18,13 +18,23 @@ class sshConfigInventory:
                 'hostvars': {}
             }
         }
-        self.groupvars = {}
         self.global_vars = {}
-        self.group_children = {}
         self.inventory[global_group] = {
             'hosts': [],
             'vars': {}
         }
+
+    def add_group_var(self,group,name,value):
+        try:
+            self.inventory[group]['vars'][name] = value
+        except KeyError:
+            return False
+        return True
+
+    def groups(self):
+        groups = self.inventory.keys()
+        pp.pprint(groups)
+        return groups
 
     def get_inventory(self,style='json'):
         if style == 'json':
@@ -61,15 +71,18 @@ class sshConfigInventory:
                         if host['inventory_hostname'] != None and host['inventory_hostname'] not in ignore_hosts and 'ignore' not in host.keys():
                             hosts.append(host)
                         host = {'inventory_hostname': line.split(' ')[1], 'group' : None, 'groups': [], 'children': [], 'hostvars': {}}
+
                     elif host_line.match(line):
                         hostname = line.split(' ')[1]
                         host['ansible_hostname'] = hostname
 
+                        try:
+                            main_group = '.'.join(hostname.split('.')[1:])
+                        except IndexError:
+                            main_group = self.global_group
+
                         if host['group'] == None:
-                            try:
-                                host['group'] = '.'.join(hostname.split('.')[1:])
-                            except IndexError:
-                                host['group'] = self.global_group
+                            host['group'] = main_group
 
                         try:
                             group_list = hostname.split('.')[2:]
@@ -98,11 +111,11 @@ class sshConfigInventory:
                                 host[name] = value
                         except KeyError:
                             host[name] = value
-                        pp.pprint(host)
                 if host['inventory_hostname'] != None and host['inventory_hostname'] not in ignore_hosts:
                     hosts.append(host)
         except IOError:
             print 'Cloud not open file %s' % file
+            self.inventory = {}
             return False
 
         for host in hosts:
@@ -128,4 +141,14 @@ class sshConfigInventory:
                     }
                 if group not in self.inventory[other_group]['children']:
                     self.inventory[other_group]['children'].append(group)
+
+            for other_group in host['groups']:
+                if other_group not in self.inventory.keys():
+                    self.inventory[other_group] = {
+                        'hosts': [],
+                        'vars': {},
+                        'children': []
+                    }
+                self.inventory[other_group]['hosts'].append(inventory_hostname)
+
             self.inventory['_meta']['hostvars'][inventory_hostname] = host['hostvars']

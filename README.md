@@ -11,6 +11,14 @@ in ansible.cfg
 inventory = '<path>/inventory.py'
 ```
 
+you can test output of inventory by running one of the following
+```
+./inventory.py --list
+./inventory.py -l
+./inventory.py -h
+```
+
+
 ## Configuration
 
 inventory.cfg accepts the following options
@@ -20,6 +28,7 @@ inventory.cfg accepts the following options
 |ssh_config|ssh_config_file| string | ~/.ssh/config ||
 ||ignore_hosts| string[,string[,...]] | None | List of hosts not to include in inventory |
 |inventory|global_group| string | global | groupname for hosts not having a fqdn hostname |
+|groupname:vars| name | value | n/a | add name=value as group var to groupname
 
 example:
 ```
@@ -29,6 +38,11 @@ ignore_hosts: github.com
 
 [inventory]
 global_group: global
+
+[freebsd:vars]
+ansible_python_interpreter=/usr/local/bin/python
+ansible_perl_interpreter=/usr/local/bin/perl5
+ansible_bash_interpreter=/usr/local/bin/bash
 ```
 
 ## Options
