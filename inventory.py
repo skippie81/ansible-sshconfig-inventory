@@ -19,9 +19,7 @@ ssh_inventory = sshConfigInventory()
 
 def configure():
     config = ConfigParser.ConfigParser()
-    inspect.getfile(inspect.currentframe())
-    path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
-    config_file = os.path.join(path,settings['config_file'])
+    config_file = settings['config_file']
     try:
         config.read(config_file)
         for section in config.sections():
