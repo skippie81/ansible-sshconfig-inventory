@@ -22,16 +22,15 @@ def configure():
             if ':' in section:
                 groupname = section.split(':')[0]
             for name,value in config.items(section):
+                if ',' in value:
+                    value = value.split(',')
                 try:
-                    if ',' in value:
-                        settings[groupname][name] = value.split(',')
-                    if isinstance(settings[groupname][name],list):
-                        settings[groupname][name].append(value)
-                    else:
-                        settings[groupname][name] = value
+                    if name in settings[groupname].keys():
+                        if isinstance(settings[groupname][name],list):
+                            value = [ value ]
                 except KeyError:
                     settings[groupname] = {}
-                    settings[groupname][name] = value
+                settings[groupname][name] = value
     except ConfigParser.Error:
         return False
     print settings
