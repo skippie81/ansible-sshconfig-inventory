@@ -3,6 +3,8 @@ Use your .ssh/config as source for ansible inventory
 
 Will create an inventory containng all your hosts in your ssh config file. 
 
+**Disclaimer:** this is work in progress.
+
 ## Usage
 
 in ansible.cfg
