@@ -3,6 +3,7 @@
 import argparse
 import ConfigParser
 import os
+import inspect
 import json
 from inventory import sshConfigInventory
 
@@ -18,8 +19,11 @@ ssh_inventory = sshConfigInventory()
 
 def configure():
     config = ConfigParser.ConfigParser()
+    inspect.getfile(inspect.currentframe())
+    path = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
+    config_file = os.path.join(path,settings['config_file'])
     try:
-        config.read(settings['config_file'])
+        config.read(config_file)
         for section in config.sections():
             groupname = section
             if ':' in section:
