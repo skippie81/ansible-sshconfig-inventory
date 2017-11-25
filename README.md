@@ -17,7 +17,12 @@ you can test output of inventory by running one of the following
 ```
 ./inventory.py --list
 ./inventory.py -l
-./inventory.py -h
+./inventory.py -H
+```
+
+help via
+```
+./inventory.py --help
 ```
 
 
