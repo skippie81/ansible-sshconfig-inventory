@@ -1,7 +1,7 @@
 # ansible-sshconfig-inventory
 Use your .ssh/config as source for ansible inventory
 
-Will create an inventory containng all your hosts in your ssh config file. 
+Will create an json format ansible inventory containing all your hosts in your ssh config file. Grouped by domain names and with some extra option if needed.
 
 **Disclaimer:** this is work in progress.
 
