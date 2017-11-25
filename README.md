@@ -52,11 +52,11 @@ __\#\:__ are evaluated by the inventory script and applied to the first host lin
 
 __Syntax:__
 ```
-#:<keyword>[:<value>[:value]]
+#:<keyword>[:<value>[,<value>[,...]]
 ```
 
 |keyword|value| |
 |:-----:|:---:|-|
-|ignore|n/a|ignore this host in inventory|
-|group|string|set the main group name for this host|
+|ignore|Empty|ignore this host in inventory|
 |groups|string[,string[,...]]|extra groups where to add the host to|
+|name|string[,string[,...]]|extra hostvars name:value to add to host|
