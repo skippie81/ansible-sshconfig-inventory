@@ -102,6 +102,8 @@ class sshConfigInventory:
                             groups.extend(value.split(','))
                         else:
                             hostvars[name] = value
+                if inventory_hostname != None:
+                    self.add_to_inventory(inventory_hostname,groups,hostvars)
         except IOError:
             print 'Cloud not open file %s' % file
             self.inventory = {}
