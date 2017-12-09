@@ -56,7 +56,7 @@ if __name__ == '__main__':
     parser.add_argument('-l','--list',action='store_true',help='output inventory json format')
     parser.add_argument('--host',type=str,nargs=1,help='get hostvars of a host')
     parser.add_argument('-H',action='store_true',help='Print human readable ini style invenotry')
-    parser.add_argument('--version',action='version',version='%(prog)s 0.0.1-beta1')
+    parser.add_argument('--version',action='version',version='%(prog)s v0.0.1')
 
     # parse the arguments
     args = parser.parse_args()
