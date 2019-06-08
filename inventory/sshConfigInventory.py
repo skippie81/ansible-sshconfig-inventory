@@ -42,7 +42,7 @@ class sshConfigInventory:
         if style == 'ini':
             return self.ini_inventory()
 
-    def read(self,file,ignore_hosts=[],use_fqdn=False):
+    def read(self,file,ignore_hosts=[],use_fqdn=False,domain_group_seperator='.'):
         empty_line = re.compile('^[ \s\t]*$')
         host_alias_line = re.compile('^Host .+')
         host_line = re.compile('^Hostname .+')
@@ -77,12 +77,12 @@ class sshConfigInventory:
                         if use_fqdn:
                             inventory_hostname = hostname
                         if '.' in hostname:
-                            base_group = '.'.join(hostname.split('.')[1:])
+                            base_group = domain_group_seperator.join(hostname.split('.')[1:])
                             groups.append(base_group)
                             try:
                                 group_list = hostname.split('.')[2:]
                                 while len(group_list) > 0:
-                                    group = '.'.join(group_list)
+                                    group = domain_group_seperator.join(group_list)
                                     self.add_child_to_group(group,base_group)
                                     base_group = group
                                     group_list.pop()

@@ -58,6 +58,7 @@ if __name__ == '__main__':
     parser.add_argument('-H',action='store_true',help='Print human readable ini style invenotry')
     parser.add_argument('--version',action='version',version='%(prog)s v0.0.1')
     parser.add_argument('--fqdn',action='store_true',help='use fqdn in inventory')
+    parser.add_argument('--group_seperator',type=char,nargs=1,help='Group seperator char for domain subgroups',default='.')
 
     # parse the arguments
     args = parser.parse_args()
@@ -70,7 +71,7 @@ if __name__ == '__main__':
 
     # read configuration file
     configure()
-    read(use_fqdn=args.fqdn)
+    read(use_fqdn=args.fqdn,domain_group_seperator=args.group_seperator)
 
     # output
     if args.host != None:
