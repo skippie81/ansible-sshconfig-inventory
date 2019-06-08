@@ -43,8 +43,8 @@ def configure():
     return True
 
 # main part of the program
-def read(use_fqdn=False):
-    ssh_inventory.read(settings['ssh_config']['ssh_config_file'],settings['ssh_config']['ignore_hosts'],use_fqdn=use_fqdn)
+def read(use_fqdn=False,domain_group_seperator='.'):
+    ssh_inventory.read(settings['ssh_config']['ssh_config_file'],settings['ssh_config']['ignore_hosts'],use_fqdn=use_fqdn,domain_group_seperator=domain_group_seperator)
     for group in ssh_inventory.groups():
         if group in settings.keys():
             for name in settings[group].keys():
@@ -58,7 +58,7 @@ if __name__ == '__main__':
     parser.add_argument('-H',action='store_true',help='Print human readable ini style invenotry')
     parser.add_argument('--version',action='version',version='%(prog)s v0.0.1')
     parser.add_argument('--fqdn',action='store_true',help='use fqdn in inventory')
-    parser.add_argument('--group_seperator',type=char,nargs=1,help='Group seperator char for domain subgroups',default='.')
+    parser.add_argument('--group_seperator',type=str,nargs=1,help='Group seperator char for domain subgroups',default='.')
 
     # parse the arguments
     args = parser.parse_args()
