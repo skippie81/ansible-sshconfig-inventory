@@ -177,7 +177,7 @@ class sshConfigInventory:
                 if first:
                     ini += '[%s]\n' % group
                     first = False
-                ini += '{0:<25}'.format(host)
+                ini += '{0:<35}'.format(host)
                 for (name,value) in self.hostvars(host,False):
                     ini += '{0:<30} '.format('%s=%s' % (name,value))
                 ini += '\n'
