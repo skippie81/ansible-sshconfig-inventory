@@ -42,7 +42,7 @@ class sshConfigInventory:
         if style == 'ini':
             return self.ini_inventory()
 
-    def read(self,file,ignore_hosts=[]):
+    def read(self,file,ignore_hosts=[],use_fqdn=False):
         empty_line = re.compile('^[ \s\t]*$')
         host_alias_line = re.compile('^Host .+')
         host_line = re.compile('^Hostname .+')
@@ -74,6 +74,8 @@ class sshConfigInventory:
                             inventory_hostname = None
                     elif host_line.match(line) and inventory_hostname != None:
                         hostname = line.split(' ')[1]
+                        if use_fqdn:
+                            inventory_hostname = hostname
                         if '.' in hostname:
                             base_group = '.'.join(hostname.split('.')[1:])
                             groups.append(base_group)

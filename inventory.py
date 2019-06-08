@@ -43,8 +43,8 @@ def configure():
     return True
 
 # main part of the program
-def read():
-    ssh_inventory.read(settings['ssh_config']['ssh_config_file'],settings['ssh_config']['ignore_hosts'])
+def read(use_fqdn=False):
+    ssh_inventory.read(settings['ssh_config']['ssh_config_file'],settings['ssh_config']['ignore_hosts'],use_fqdn=use_fqdn)
     for group in ssh_inventory.groups():
         if group in settings.keys():
             for name in settings[group].keys():
@@ -57,6 +57,7 @@ if __name__ == '__main__':
     parser.add_argument('--host',type=str,nargs=1,help='get hostvars of a host')
     parser.add_argument('-H',action='store_true',help='Print human readable ini style invenotry')
     parser.add_argument('--version',action='version',version='%(prog)s v0.0.1')
+    parser.add_argument('--fqdn',action='store_true',help='use fqdn in inventory')
 
     # parse the arguments
     args = parser.parse_args()
@@ -69,7 +70,7 @@ if __name__ == '__main__':
 
     # read configuration file
     configure()
-    read()
+    read(use_fqdn=args.fqdn)
 
     # output
     if args.host != None:
