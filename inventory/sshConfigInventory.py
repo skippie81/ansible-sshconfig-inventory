@@ -120,7 +120,7 @@ class sshConfigInventory:
                     'vars': {},
                     'children': []
                 }
-            if inventory_hostname not in self.ini_inventory[group]['hosts']:
+            if inventory_hostname not in self.inventory[group]['hosts']:
                 self.inventory[group]['hosts'].append(inventory_hostname)
         self.inventory['_meta']['hostvars'][inventory_hostname] = hostvars
 
