@@ -120,7 +120,8 @@ class sshConfigInventory:
                     'vars': {},
                     'children': []
                 }
-            self.inventory[group]['hosts'].append(inventory_hostname)
+            if inventory_hostname not in self.ini_inventory[group]['hosts']:
+                self.inventory[group]['hosts'].append(inventory_hostname)
         self.inventory['_meta']['hostvars'][inventory_hostname] = hostvars
 
     def add_child_to_group(self,group,child):
