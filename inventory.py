@@ -71,7 +71,7 @@ if __name__ == '__main__':
 
     # read configuration file
     configure()
-    read(use_fqdn=args.fqdn,domain_group_seperator=args.group_seperator)
+    read(use_fqdn=args.fqdn,domain_group_seperator=args.group_seperator[0])
 
     # output
     if args.host != None:
