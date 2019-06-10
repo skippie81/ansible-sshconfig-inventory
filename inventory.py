@@ -65,7 +65,7 @@ if __name__ == '__main__':
     parser.add_argument('--version',action='version',version='%(prog)s v0.0.1')
     parser.add_argument('--fqdn',action='store_true',help='use fqdn in inventory')
     parser.add_argument('--group_seperator',type=str,nargs=1,help='Group seperator char for domain subgroups',default=settings['defaults']['group_seperator'])
-    parser.add_argument('--ssh-config-file',type=str,nargs=1,help='Path to ssh config file',default=settings['ssh_config']['ssh_config_file'])
+    parser.add_argument('--ssh-config-file',type=str,help='Path to ssh config file',default=settings['ssh_config']['ssh_config_file'])
 
     # parse the arguments
     args = parser.parse_args()
