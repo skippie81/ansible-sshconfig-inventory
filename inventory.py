@@ -12,6 +12,9 @@ settings = {
     'ssh_config': {
         'ssh_config_file': os.path.join(os.getenv('HOME','~/'),'.ssh/config'),
         'ignore_hosts': []
+    },
+    'defaults': {
+        'group_seperator': '_'
     }
 }
 
@@ -51,6 +54,9 @@ def read(use_fqdn=False,domain_group_seperator='.'):
                 ssh_inventory.add_group_var(group,name,settings[group][name])
 
 if __name__ == '__main__':
+    # read configuration file
+    configure()
+
     # ceate the argument parser
     parser = argparse.ArgumentParser(description='Dynamic ansible inventory with ssh_config as source')
     parser.add_argument('-l','--list',action='store_true',help='output inventory json format')
@@ -58,7 +64,7 @@ if __name__ == '__main__':
     parser.add_argument('-H',action='store_true',help='Print human readable ini style invenotry')
     parser.add_argument('--version',action='version',version='%(prog)s v0.0.1')
     parser.add_argument('--fqdn',action='store_true',help='use fqdn in inventory')
-    parser.add_argument('--group_seperator',type=str,nargs=1,help='Group seperator char for domain subgroups',default='.')
+    parser.add_argument('--group_seperator',type=str,nargs=1,help='Group seperator char for domain subgroups',default=settings['defaults']['group_seperator'])
 
     # parse the arguments
     args = parser.parse_args()
@@ -69,8 +75,7 @@ if __name__ == '__main__':
     if args.H:
         style='ini'
 
-    # read configuration file
-    configure()
+    # read the .ssh/config
     read(use_fqdn=args.fqdn,domain_group_seperator=args.group_seperator[0])
 
     # output
